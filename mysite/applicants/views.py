@@ -6,6 +6,7 @@ from django.http import HttpResponse
 import datetime 
 
 from .models import Applicants
+from .forms import ApplicantForm
   
 # create a function 
 def home_view(request): 
@@ -17,11 +18,17 @@ def home_view(request):
     return HttpResponse(html) 
 
 def app_home(request):
-    applicants = Applicants.objects.all()
+    applicants = Applicants.objects.all()  #returns QuerySet
     print(applicants)
+    if request.method == 'POST':
+        form = ApplicantForm(request.POST)
+        if form.is_valid():
+            form.save()
+    form = ApplicantForm()
     context = {
         'applicants': applicants,
-        'name':'Applicatns App'
+        'name':'Applicatns App',
+        'form': form
     }
     
     return render(request,'apphome.html', context)
