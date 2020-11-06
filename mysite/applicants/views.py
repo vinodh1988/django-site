@@ -13,3 +13,6 @@ def home_view(request):
     html = "Time is {}".format(now) 
     # return response 
     return HttpResponse(html) 
+
+def app_home(request):
+    return render(request,'apphome.html', context={'name':'Applicants App'})
