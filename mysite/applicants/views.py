@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.http import HttpResponse 
 # get datetime 
 import datetime 
+
+from .models import Applicants
   
 # create a function 
 def home_view(request): 
@@ -15,4 +17,11 @@ def home_view(request):
     return HttpResponse(html) 
 
 def app_home(request):
-    return render(request,'apphome.html', context={'name':'Applicants App'})
+    applicants = Applicants.objects.all()
+    print(applicants)
+    context = {
+        'applicants': applicants,
+        'name':'Applicatns App'
+    }
+    
+    return render(request,'apphome.html', context)
